@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DevCV // Creador de Currículum para Desarrolladores</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <!-- Lucide Icons CDN -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="theme-sapphire">
+    <!-- App Container -->
+    <div class="app-container">
+        <!-- Control Header -->
+        <header class="app-header no-print">
+            <div class="header-logo">
+                <div class="logo-icon"><i data-lucide="code-2"></i></div>
+                <div class="logo-text">
+                    <h1>Dev<span>CV</span></h1>
+                    <p>Creador de Currículum para Desarrolladores</p>
+                </div>
+            </div>
+            
+            <div class="header-actions">
+                <!-- Theme Switcher -->
+                <div class="theme-selector">
+                    <span class="selector-label">Tema:</span>
+                    <div class="theme-buttons">
+                        <button class="theme-btn btn-sapphire active" data-theme="sapphire" title="Tech Sapphire"></button>
+                        <button class="theme-btn btn-cyberpunk" data-theme="cyberpunk" title="Cyberpunk Neon"></button>
+                        <button class="theme-btn btn-emerald" data-theme="emerald" title="Emerald Mint"></button>
+                        <button class="theme-btn btn-nordic" data-theme="nordic" title="Nordic Slate"></button>
+                    </div>
+                </div>
+
+                <div class="action-buttons">
+                    <button id="btn-sample-data" class="btn btn-secondary">
+                        <i data-lucide="sparkles"></i> Cargar Ejemplo
+                    </button>
+                    <button id="btn-clear-data" class="btn btn-secondary danger" title="Borrar todo">
+                        <i data-lucide="trash-2"></i> Limpiar
+                    </button>
+                    <button id="btn-export-pdf" class="btn btn-primary">
+                        <i data-lucide="download"></i> Exportar PDF
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Workspace -->
+        <main class="workspace">
+            <!-- Left Side: Editor Form -->
+            <section class="editor-panel no-print">
+                <div class="editor-scroller">
+                    <div class="editor-header-sticky">
+                        <h2><i data-lucide="edit-3"></i> Editor de Datos</h2>
+                        <span class="helper-text">Rellena los campos y mira la vista previa en tiempo real.</span>
+                    </div>
+
+                    <!-- Accordion Form -->
+                    <div class="editor-accordion">
+                        
+                        <!-- 1. Datos Personales -->
+                        <details class="accordion-item">
+                            <summary class="accordion-trigger">
+                                <span><i data-lucide="user"></i> Información Personal</span>
+                                <i data-lucide="chevron-down" class="chevron"></i>
+                            </summary>
+                            <div class="accordion-content grid-2">
+                                <div class="form-group">
+                                    <label for="input-fullname">Nombre Completo</label>
+                                    <input type="text" id="input-fullname" placeholder="Ej. Juan Pérez">
+                                </div>
+                                <div class="form-group">
+                                    <label for="input-title">Título Profesional / Especialidad</label>
+                                    <input type="text" id="input-title" placeholder="Ej. Desarrollador Multiplataforma (DAM)">
+                                </div>
+                                <div class="form-group">
+                                    <label for="input-email">Correo Electrónico</label>
+                                    <input type="email" id="input-email" placeholder="Ej. dev@correo.com">
+                                </div>
+                                <div class="form-group">
+                                    <label for="input-phone">Teléfono</label>
+                                    <input type="tel" id="input-phone" placeholder="Ej. +34 600 000 000">
+                                </div>
+                                <div class="form-group">
+                                    <label for="input-github">GitHub (URL o Usuario)</label>
+                                    <input type="text" id="input-github" placeholder="Ej. github.com/tu-usuario">
+                                </div>
+                                <div class="form-group">
+                                    <label for="input-linkedin">LinkedIn (URL o Usuario)</label>
+                                    <input type="text" id="input-linkedin" placeholder="Ej. linkedin.com/in/tu-usuario">
+                                </div>
+                                <div class="form-group">
+                                    <label for="input-website">Web Personal / Portafolio</label>
+                                    <input type="text" id="input-website" placeholder="Ej. tuweb.dev">
+                                </div>
+                                <div class="form-group">
+                                    <label for="input-location">Ubicación</label>
+                                    <input type="text" id="input-location" placeholder="Ej. Madrid, España">
+                                </div>
+                            </div>
+                        </details>
+
+                        <!-- 2. Sobre Mí -->
+                        <details class="accordion-item">
+                            <summary class="accordion-trigger">
+                                <span>
+                                    <input type="checkbox" class="section-toggle" checked data-section="cv-section-summary" title="Activar/Desactivar sección">
+                                    <i data-lucide="file-text"></i> Perfil Profesional (Sobre mí)
+                                </span>
+                                <i data-lucide="chevron-down" class="chevron"></i>
+                            </summary>
+                            <div class="accordion-content">
+                                <div class="form-group">
+                                    <label for="input-summary">Breve descripción de ti y tus objetivos en tecnología</label>
+                                    <textarea id="input-summary" rows="4" placeholder="Ej. Estudiante de DAM apasionado por el desarrollo de aplicaciones móviles y backend. Con experiencia práctica creando proyectos académicos con Flutter y Spring Boot..."></textarea>
+                                </div>
+                            </div>
+                        </details>
+
+                        <!-- 3. Experiencia Laboral -->
+                        <details class="accordion-item">
+                            <summary class="accordion-trigger">
+                                <span>
+                                    <input type="checkbox" class="section-toggle" checked data-section="cv-section-experience" title="Activar/Desactivar sección">
+                                    <i data-lucide="briefcase"></i> Experiencia Laboral
+                                </span>
+                                <i data-lucide="chevron-down" class="chevron"></i>
+                            </summary>
+                            <div class="accordion-content">
+                                <div id="experience-list" class="dynamic-list">
+                                    <!-- Dynamic items will be added here -->
+                                </div>
+                                <button type="button" id="btn-add-experience" class="btn btn-outline btn-sm">
+                                    <i data-lucide="plus"></i> Añadir Experiencia
+                                </button>
+                            </div>
+                        </details>
+
+                        <!-- 4. Proyectos Destacados -->
+                        <details class="accordion-item">
+                            <summary class="accordion-trigger">
+                                <span>
+                                    <input type="checkbox" class="section-toggle" checked data-section="cv-section-projects" title="Activar/Desactivar sección">
+                                    <i data-lucide="folder-git-2"></i> Proyectos
+                                </span>
+                                <i data-lucide="chevron-down" class="chevron"></i>
+                            </summary>
+                            <div class="accordion-content">
+                                <div id="projects-list" class="dynamic-list">
+                                    <!-- Dynamic items will be added here -->
+                                </div>
+                                <button type="button" id="btn-add-project" class="btn btn-outline btn-sm">
+                                    <i data-lucide="plus"></i> Añadir Proyecto
+                                </button>
+                            </div>
+                        </details>
+
+                        <!-- 5. Educación -->
+                        <details class="accordion-item">
+                            <summary class="accordion-trigger">
+                                <span>
+                                    <input type="checkbox" class="section-toggle" checked data-section="cv-section-education" title="Activar/Desactivar sección">
+                                    <i data-lucide="graduation-cap"></i> Educación
+                                </span>
+                                <i data-lucide="chevron-down" class="chevron"></i>
+                            </summary>
+                            <div class="accordion-content">
+                                <div id="education-list" class="dynamic-list">
+                                    <!-- Dynamic items will be added here -->
+                                </div>
+                                <button type="button" id="btn-add-education" class="btn btn-outline btn-sm">
+                                    <i data-lucide="plus"></i> Añadir Educación
+                                </button>
+                            </div>
+                        </details>
+
+                        <!-- 6. Tecnologías y Habilidades -->
+                        <details class="accordion-item">
+                            <summary class="accordion-trigger">
+                                <span>
+                                    <input type="checkbox" class="section-toggle" checked data-section="cv-section-skills" title="Activar/Desactivar sección">
+                                    <i data-lucide="terminal"></i> Tecnologías y Habilidades
+                                </span>
+                                <i data-lucide="chevron-down" class="chevron"></i>
+                            </summary>
+                            <div class="accordion-content">
+                                <div class="form-group">
+                                    <label for="input-languages">Lenguajes de Programación (separados por comas)</label>
+                                    <input type="text" id="input-languages" placeholder="Ej. Java, Kotlin, Dart, JavaScript, SQL">
+                                </div>
+                                <div class="form-group">
+                                    <label for="input-frameworks">Frameworks y Librerías (separados por comas)</label>
+                                    <input type="text" id="input-frameworks" placeholder="Ej. Flutter, Android SDK, Spring Boot, React, Node.js">
+                                </div>
+                                <div class="form-group">
+                                    <label for="input-tools">Herramientas y Entornos (separados por comas)</label>
+                                    <input type="text" id="input-tools" placeholder="Ej. Git, GitHub, Docker, Firebase, Android Studio, VS Code">
+                                </div>
+                                <div class="form-group">
+                                    <label for="input-softskills">Habilidades Blandas / Otras (separados por comas)</label>
+                                    <input type="text" id="input-softskills" placeholder="Ej. Trabajo en equipo, Metodologías Ágiles, Resolución de problemas">
+                                </div>
+                            </div>
+                        </details>
+
+                        <!-- 7. Idiomas -->
+                        <details class="accordion-item">
+                            <summary class="accordion-trigger">
+                                <span>
+                                    <input type="checkbox" class="section-toggle" checked data-section="cv-section-languages" title="Activar/Desactivar sección">
+                                    <i data-lucide="languages"></i> Idiomas
+                                </span>
+                                <i data-lucide="chevron-down" class="chevron"></i>
+                            </summary>
+                            <div class="accordion-content">
+                                <div class="form-group">
+                                    <label for="input-lang-native">Idiomas y Niveles (separados por comas)</label>
+                                    <input type="text" id="input-lang-native" placeholder="Ej. Español (Nativo), Inglés (B2)">
+                                </div>
+                            </div>
+                        </details>
+
+                    </div>
+                </div>
+            </section>
+
+            <!-- Right Side: Live A4 PDF Preview -->
+            <section class="preview-panel">
+                <div class="preview-scroller">
+                    <!-- The Simulated Sheet (A4 Paper Aspect Ratio) -->
+                    <div class="cv-sheet" id="cv-preview-sheet">
+                        
+                        <!-- CV Top Accent Header Block -->
+                        <header class="cv-header">
+                            <div class="cv-header-left">
+                                <h1 id="preview-fullname">Nombre Apellido</h1>
+                                <h2 id="preview-title">Título Profesional / Especialidad</h2>
+                            </div>
+                            <div class="cv-header-right">
+                                <!-- Quick Metadata Info -->
+                                <div class="cv-contact-item" id="cv-contact-email-container">
+                                    <i data-lucide="mail"></i> <span id="preview-email">correo@dev.com</span>
+                                </div>
+                                <div class="cv-contact-item" id="cv-contact-phone-container">
+                                    <i data-lucide="phone"></i> <span id="preview-phone">+34 000 000 000</span>
+                                </div>
+                                <div class="cv-contact-item" id="cv-contact-location-container">
+                                    <i data-lucide="map-pin"></i> <span id="preview-location">Ciudad, País</span>
+                                </div>
+                                <div class="cv-contact-item" id="cv-contact-website-container">
+                                    <i data-lucide="globe"></i> <span id="preview-website">miweb.dev</span>
+                                </div>
+                                <div class="cv-contact-item" id="cv-contact-github-container">
+                                    <i data-lucide="github"></i> <span id="preview-github">github.com/usuario</span>
+                                </div>
+                                <div class="cv-contact-item" id="cv-contact-linkedin-container">
+                                    <i data-lucide="linkedin"></i> <span id="preview-linkedin">linkedin.com/in/usuario</span>
+                                </div>
+                            </div>
+                        </header>
+
+                        <!-- CV Main Content Layout: Split Column for structure -->
+                        <div class="cv-body">
+                            
+                            <!-- Left Column: Skills, Education, Languages (Sidebar Track) -->
+                            <div class="cv-side-col">
+                                
+                                <!-- Technical Skills -->
+                                <section class="cv-section" id="cv-section-skills">
+                                    <h3 class="cv-section-title"><i data-lucide="cpu"></i> Competencias</h3>
+                                    
+                                    <div class="cv-skill-group" id="preview-languages-group">
+                                        <h4>Lenguajes</h4>
+                                        <div id="preview-languages" class="cv-tags">
+                                            <!-- Dynamically filled -->
+                                        </div>
+                                    </div>
+
+                                    <div class="cv-skill-group" id="preview-frameworks-group">
+                                        <h4>Frameworks / Libs</h4>
+                                        <div id="preview-frameworks" class="cv-tags">
+                                            <!-- Dynamically filled -->
+                                        </div>
+                                    </div>
+
+                                    <div class="cv-skill-group" id="preview-tools-group">
+                                        <h4>Herramientas</h4>
+                                        <div id="preview-tools" class="cv-tags">
+                                            <!-- Dynamically filled -->
+                                        </div>
+                                    </div>
+
+                                    <div class="cv-skill-group" id="preview-softskills-group">
+                                        <h4>Habilidades</h4>
+                                        <div id="preview-softskills" class="cv-tags">
+                                            <!-- Dynamically filled -->
+                                        </div>
+                                    </div>
+                                </section>
+
+                                <!-- Education -->
+                                <section class="cv-section" id="cv-section-education">
+                                    <h3 class="cv-section-title"><i data-lucide="graduation-cap"></i> Formación</h3>
+                                    <div id="preview-education" class="cv-list-block">
+                                        <!-- Will be dynamically populated -->
+                                    </div>
+                                </section>
+
+                                <!-- Languages -->
+                                <section class="cv-section" id="cv-section-languages">
+                                    <h3 class="cv-section-title"><i data-lucide="languages"></i> Idiomas</h3>
+                                    <div id="preview-languages-list" class="cv-languages-list">
+                                        <!-- Dynamically filled -->
+                                    </div>
+                                </section>
+
+                            </div>
+
+                            <!-- Right Column: Summary, Experience, Projects (Main Track) -->
+                            <div class="cv-main-col">
+                                
+                                <!-- Profile Section -->
+                                <section class="cv-section" id="cv-section-summary">
+                                    <h3 class="cv-section-title"><i data-lucide="user-check"></i> Perfil Profesional</h3>
+                                    <p id="preview-summary" class="cv-text-block">
+                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut sed tristique lorem. Suspendisse non sapien sed lectus vestibulum hendrerit sed et est.
+                                    </p>
+                                </section>
+
+                                <!-- Work Experience -->
+                                <section class="cv-section" id="cv-section-experience">
+                                    <h3 class="cv-section-title"><i data-lucide="briefcase"></i> Experiencia Laboral</h3>
+                                    <div id="preview-experience" class="cv-list-block">
+                                        <!-- Will be dynamically populated -->
+                                    </div>
+                                </section>
+
+                                <!-- Projects -->
+                                <section class="cv-section" id="cv-section-projects">
+                                    <h3 class="cv-section-title"><i data-lucide="folder-git-2"></i> Proyectos</h3>
+                                    <div id="preview-projects" class="cv-list-block">
+                                        <!-- Will be dynamically populated -->
+                                    </div>
+                                </section>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+    
+    <!-- Custom Confirmation Modal -->
+    <div id="confirm-modal" class="modal-overlay no-print">
+        <div class="modal-box">
+            <div class="modal-header">
+                <i data-lucide="alert-triangle" class="modal-icon-warning"></i>
+                <h3>¿Confirmar acción?</h3>
+            </div>
+            <div class="modal-body">
+                <p>¿Estás seguro de que deseas limpiar todos los campos del currículum? Se perderá todo el progreso actual y guardado.</p>
+            </div>
+            <div class="modal-footer">
+                <button id="modal-btn-cancel" class="btn btn-secondary">Cancelar</button>
+                <button id="modal-btn-confirm" class="btn btn-primary danger">Sí, limpiar todo</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Script -->
+    <script src="script.js"></script>
+</body>
+</html>

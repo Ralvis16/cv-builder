@@ -1,0 +1,11 @@
+# macOS
+.DS_Store
+
+# IDEs and Editors
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
