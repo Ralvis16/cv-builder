@@ -1,6 +1,6 @@
-# DevCV 🚀 // Creador de Currículum para Desarrolladores
+# ProCV 🚀 // Creador de Currículum Profesional
 
-Una aplicación web moderna, premium e interactiva diseñada para crear currículums técnicos profesionales adaptados al formato estándar de impresión **A4**. Desarrollado especialmente pensando en perfiles técnicos (como estudiantes de DAM/DAW e ingenieros de software) que buscan una presentación limpia, minimalista y de alto impacto visual.
+Una aplicación web moderna, premium e interactiva diseñada para crear currículums profesionales adaptados al formato estándar de impresión **A4**. Pensada para cualquier tipo de público que busque una presentación de su perfil limpia, minimalista y de alto impacto visual.
 
 ---
 
