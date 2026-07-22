@@ -29,6 +29,15 @@ Una aplicación web moderna, premium e interactiva diseñada para crear currícu
 
 ---
 
+## 🏗️ Arquitectura y Clean Code
+
+El proyecto ha sido recientemente refactorizado para seguir principios de **Clean Code** y facilitar su escalabilidad:
+*   **Modularidad en JS:** La lógica de renderizado principal (`updatePreview`) está dividida en submódulos especializados por cada sección del currículum (Principio de Única Responsabilidad).
+*   **Factory Pattern:** La creación de bloques dinámicos de HTML (para añadir experiencias, idiomas, etc.) utiliza funciones de fábrica para evitar duplicación de código de interfaz.
+*   **CSS Estructurado:** Separación estricta entre estilos e interfaz, evitando estilos en línea (inline CSS) y manteniendo selectores semánticos limpios.
+
+---
+
 ## 🚀 Cómo Ejecutar el Proyecto en Local
 
 Dado que la aplicación es puramente estática, solo requiere un servidor HTTP básico para funcionar de forma óptima y permitir la persistencia local:
