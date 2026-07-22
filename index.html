@@ -3,25 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DevCV // Creador de Currículum para Desarrolladores</title>
+    <title>ProCV // Creador de Currículum Profesional</title>
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <!-- Lucide Icons CDN -->
     <script src="https://unpkg.com/lucide@latest"></script>
-    <link rel="stylesheet" href="style.css">
+    <!-- jsPDF and html2pdf -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <link rel="stylesheet" href="style.css?v=7">
 </head>
 <body class="theme-sapphire">
     <!-- App Container -->
     <div class="app-container">
         <!-- Control Header -->
         <header class="app-header no-print">
-            <div class="header-logo">
-                <div class="logo-icon"><i data-lucide="code-2"></i></div>
+            <div class="header-logo" style="cursor: pointer;" onclick="window.location.reload();" title="Recargar aplicación">
+                <div class="logo-icon"><i data-lucide="briefcase"></i></div>
                 <div class="logo-text">
-                    <h1>Dev<span>CV</span></h1>
-                    <p>Creador de Currículum para Desarrolladores</p>
+                    <h1>Pro<span>CV</span></h1>
+                    <p>Creador de Currículum Profesional</p>
                 </div>
             </div>
             
@@ -36,16 +38,33 @@
                         <button class="theme-btn btn-nordic" data-theme="nordic" title="Nordic Slate"></button>
                     </div>
                 </div>
+                
+                <!-- Template Switcher -->
+                <div class="template-selector">
+                    <span class="selector-label">Estructura:</span>
+                    <div class="template-buttons">
+                        <button class="btn-template active" data-template="modern" title="Moderno (2 Columnas)"><i data-lucide="columns"></i></button>
+                        <button class="btn-template" data-template="minimal" title="Minimalista (1 Columna)"><i data-lucide="align-center"></i></button>
+                        <button class="btn-template" data-template="classic" title="Clásico (Limpio)"><i data-lucide="layout-list"></i></button>
+                    </div>
+                </div>
 
                 <div class="action-buttons">
-                    <button id="btn-sample-data" class="btn btn-secondary">
-                        <i data-lucide="sparkles"></i> Cargar Ejemplo
+                    <button id="btn-import-json" class="btn btn-secondary" title="Importar CV desde archivo JSON">
+                        <i data-lucide="upload"></i> Cargar Datos
+                    </button>
+                    <input type="file" id="input-json-file" accept=".json" style="display: none;">
+                    <button id="btn-export-json" class="btn btn-secondary" title="Exportar CV a archivo JSON">
+                        <i data-lucide="download"></i> Guardar Datos
+                    </button>
+                    <button id="btn-sample-data" class="btn btn-secondary" title="Cargar datos de ejemplo">
+                        <i data-lucide="sparkles"></i> Ejemplo
                     </button>
                     <button id="btn-clear-data" class="btn btn-secondary danger" title="Borrar todo">
                         <i data-lucide="trash-2"></i> Limpiar
                     </button>
-                    <button id="btn-export-pdf" class="btn btn-primary">
-                        <i data-lucide="download"></i> Exportar PDF
+                    <button id="btn-export-pdf" class="btn btn-primary" title="Imprimir o guardar como PDF">
+                        <i data-lucide="printer"></i> Imprimir PDF
                     </button>
                 </div>
             </div>
@@ -65,31 +84,38 @@
                     <div class="editor-accordion">
                         
                         <!-- 1. Datos Personales -->
-                        <details class="accordion-item">
+                        <details class="accordion-item" data-fixed="true">
                             <summary class="accordion-trigger">
                                 <span><i data-lucide="user"></i> Información Personal</span>
                                 <i data-lucide="chevron-down" class="chevron"></i>
                             </summary>
                             <div class="accordion-content grid-2">
+                                <div class="form-group" style="grid-column: 1 / -1;">
+                                    <label>Fotografía de Perfil (Opcional)</label>
+                                    <div style="display: flex; gap: 10px; align-items: center;">
+                                        <input type="file" id="input-photo" accept="image/*" style="flex: 1;">
+                                        <button id="btn-remove-photo" class="btn btn-secondary danger" style="padding: 0.5rem; display: none;" title="Eliminar Foto"><i data-lucide="trash-2"></i></button>
+                                    </div>
+                                </div>
                                 <div class="form-group">
                                     <label for="input-fullname">Nombre Completo</label>
                                     <input type="text" id="input-fullname" placeholder="Ej. Juan Pérez">
                                 </div>
                                 <div class="form-group">
                                     <label for="input-title">Título Profesional / Especialidad</label>
-                                    <input type="text" id="input-title" placeholder="Ej. Desarrollador Multiplataforma (DAM)">
+                                    <input type="text" id="input-title" placeholder="Ej. Especialista en Marketing, Gestor de Proyectos">
                                 </div>
                                 <div class="form-group">
                                     <label for="input-email">Correo Electrónico</label>
-                                    <input type="email" id="input-email" placeholder="Ej. dev@correo.com">
+                                    <input type="email" id="input-email" placeholder="Ej. contacto@email.com">
                                 </div>
                                 <div class="form-group">
                                     <label for="input-phone">Teléfono</label>
                                     <input type="tel" id="input-phone" placeholder="Ej. +34 600 000 000">
                                 </div>
                                 <div class="form-group">
-                                    <label for="input-github">GitHub (URL o Usuario)</label>
-                                    <input type="text" id="input-github" placeholder="Ej. github.com/tu-usuario">
+                                    <label for="input-link">Enlace Personal / Redes</label>
+                                    <input type="text" id="input-link" placeholder="Ej. linkedin.com/in/usuario">
                                 </div>
                                 <div class="form-group">
                                     <label for="input-linkedin">LinkedIn (URL o Usuario)</label>
@@ -97,7 +123,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="input-website">Web Personal / Portafolio</label>
-                                    <input type="text" id="input-website" placeholder="Ej. tuweb.dev">
+                                    <input type="text" id="input-website" placeholder="Ej. tuweb.com">
                                 </div>
                                 <div class="form-group">
                                     <label for="input-location">Ubicación</label>
@@ -107,7 +133,7 @@
                         </details>
 
                         <!-- 2. Sobre Mí -->
-                        <details class="accordion-item">
+                        <details class="accordion-item" data-fixed="true">
                             <summary class="accordion-trigger">
                                 <span>
                                     <input type="checkbox" class="section-toggle" checked data-section="cv-section-summary" title="Activar/Desactivar sección">
@@ -117,46 +143,72 @@
                             </summary>
                             <div class="accordion-content">
                                 <div class="form-group">
-                                    <label for="input-summary">Breve descripción de ti y tus objetivos en tecnología</label>
-                                    <textarea id="input-summary" rows="4" placeholder="Ej. Estudiante de DAM apasionado por el desarrollo de aplicaciones móviles y backend. Con experiencia práctica creando proyectos académicos con Flutter y Spring Boot..."></textarea>
+                                    <label for="input-title-profile">Título de la sección</label>
+                                    <input type="text" id="input-title-profile" value="Perfil Profesional" placeholder="Ej. Sobre mí, Resumen...">
+                                </div>
+                                <div class="form-group">
+                                    <label for="input-summary">Breve descripción de ti y tus objetivos</label>
+                                    <textarea id="input-summary" rows="4" placeholder="Ej. Profesional con experiencia en gestión de equipos y optimización de procesos..."></textarea>
                                 </div>
                             </div>
                         </details>
 
-                        <!-- 3. Experiencia Laboral -->
-                        <details class="accordion-item">
-                            <summary class="accordion-trigger">
-                                <span>
-                                    <input type="checkbox" class="section-toggle" checked data-section="cv-section-experience" title="Activar/Desactivar sección">
-                                    <i data-lucide="briefcase"></i> Experiencia Laboral
-                                </span>
-                                <i data-lucide="chevron-down" class="chevron"></i>
-                            </summary>
-                            <div class="accordion-content">
-                                <div id="experience-list" class="dynamic-list">
-                                    <!-- Dynamic items will be added here -->
-                                </div>
-                                <button type="button" id="btn-add-experience" class="btn btn-outline btn-sm">
-                                    <i data-lucide="plus"></i> Añadir Experiencia
-                                </button>
-                            </div>
-                        </details>
-
-                        <!-- 4. Proyectos Destacados -->
+                        <!-- 3. Proyectos Destacados -->
                         <details class="accordion-item">
                             <summary class="accordion-trigger">
                                 <span>
                                     <input type="checkbox" class="section-toggle" checked data-section="cv-section-projects" title="Activar/Desactivar sección">
                                     <i data-lucide="folder-git-2"></i> Proyectos
                                 </span>
-                                <i data-lucide="chevron-down" class="chevron"></i>
+                                <div style="display: flex; align-items: center; gap: 8px;">
+                                    <div class="section-controls" onclick="event.preventDefault();">
+                                        <div class="drag-handle" title="Arrastrar para mover"><i data-lucide="grip-vertical"></i></div>
+                                        <button class="btn-section-up" title="Subir sección"><i data-lucide="arrow-up"></i></button>
+                                        <button class="btn-section-down" title="Bajar sección"><i data-lucide="arrow-down"></i></button>
+                                    </div>
+                                    <i data-lucide="chevron-down" class="chevron"></i>
+                                </div>
                             </summary>
                             <div class="accordion-content">
+                                <div class="form-group">
+                                    <label for="input-title-projects">Título de la sección</label>
+                                    <input type="text" id="input-title-projects" value="Proyectos" placeholder="Ej. Portafolio, Casos de Estudio...">
+                                </div>
                                 <div id="projects-list" class="dynamic-list">
                                     <!-- Dynamic items will be added here -->
                                 </div>
                                 <button type="button" id="btn-add-project" class="btn btn-outline btn-sm">
                                     <i data-lucide="plus"></i> Añadir Proyecto
+                                </button>
+                            </div>
+                        </details>
+
+                        <!-- 4. Experiencia Laboral -->
+                        <details class="accordion-item">
+                            <summary class="accordion-trigger">
+                                <span>
+                                    <input type="checkbox" class="section-toggle" checked data-section="cv-section-experience" title="Activar/Desactivar sección">
+                                    <i data-lucide="briefcase"></i> Experiencia Laboral
+                                </span>
+                                <div style="display: flex; align-items: center; gap: 8px;">
+                                    <div class="section-controls" onclick="event.preventDefault();">
+                                        <div class="drag-handle" title="Arrastrar para mover"><i data-lucide="grip-vertical"></i></div>
+                                        <button class="btn-section-up" title="Subir sección"><i data-lucide="arrow-up"></i></button>
+                                        <button class="btn-section-down" title="Bajar sección"><i data-lucide="arrow-down"></i></button>
+                                    </div>
+                                    <i data-lucide="chevron-down" class="chevron"></i>
+                                </div>
+                            </summary>
+                            <div class="accordion-content">
+                                <div class="form-group">
+                                    <label for="input-title-experience">Título de la sección</label>
+                                    <input type="text" id="input-title-experience" value="Experiencia Laboral" placeholder="Ej. Experiencia, Historial Laboral...">
+                                </div>
+                                <div id="experience-list" class="dynamic-list">
+                                    <!-- Dynamic items will be added here -->
+                                </div>
+                                <button type="button" id="btn-add-experience" class="btn btn-outline btn-sm">
+                                    <i data-lucide="plus"></i> Añadir Experiencia
                                 </button>
                             </div>
                         </details>
@@ -168,9 +220,20 @@
                                     <input type="checkbox" class="section-toggle" checked data-section="cv-section-education" title="Activar/Desactivar sección">
                                     <i data-lucide="graduation-cap"></i> Educación
                                 </span>
-                                <i data-lucide="chevron-down" class="chevron"></i>
+                                <div style="display: flex; align-items: center; gap: 8px;">
+                                    <div class="section-controls" onclick="event.preventDefault();">
+                                        <div class="drag-handle" title="Arrastrar para mover"><i data-lucide="grip-vertical"></i></div>
+                                        <button class="btn-section-up" title="Subir sección"><i data-lucide="arrow-up"></i></button>
+                                        <button class="btn-section-down" title="Bajar sección"><i data-lucide="arrow-down"></i></button>
+                                    </div>
+                                    <i data-lucide="chevron-down" class="chevron"></i>
+                                </div>
                             </summary>
                             <div class="accordion-content">
+                                <div class="form-group">
+                                    <label for="input-title-education">Título de la sección</label>
+                                    <input type="text" id="input-title-education" value="Formación" placeholder="Ej. Educación, Estudios...">
+                                </div>
                                 <div id="education-list" class="dynamic-list">
                                     <!-- Dynamic items will be added here -->
                                 </div>
@@ -187,25 +250,26 @@
                                     <input type="checkbox" class="section-toggle" checked data-section="cv-section-skills" title="Activar/Desactivar sección">
                                     <i data-lucide="terminal"></i> Tecnologías y Habilidades
                                 </span>
-                                <i data-lucide="chevron-down" class="chevron"></i>
+                                <div style="display: flex; align-items: center; gap: 8px;">
+                                    <div class="section-controls" onclick="event.preventDefault();">
+                                        <div class="drag-handle" title="Arrastrar para mover"><i data-lucide="grip-vertical"></i></div>
+                                        <button class="btn-section-up" title="Subir sección"><i data-lucide="arrow-up"></i></button>
+                                        <button class="btn-section-down" title="Bajar sección"><i data-lucide="arrow-down"></i></button>
+                                    </div>
+                                    <i data-lucide="chevron-down" class="chevron"></i>
+                                </div>
                             </summary>
                             <div class="accordion-content">
                                 <div class="form-group">
-                                    <label for="input-languages">Lenguajes de Programación (separados por comas)</label>
-                                    <input type="text" id="input-languages" placeholder="Ej. Java, Kotlin, Dart, JavaScript, SQL">
+                                    <label for="input-title-skills">Título de la sección</label>
+                                    <input type="text" id="input-title-skills" value="Competencias" placeholder="Ej. Habilidades, Tecnologías...">
                                 </div>
-                                <div class="form-group">
-                                    <label for="input-frameworks">Frameworks y Librerías (separados por comas)</label>
-                                    <input type="text" id="input-frameworks" placeholder="Ej. Flutter, Android SDK, Spring Boot, React, Node.js">
+                                <div id="skills-list" class="dynamic-list">
+                                    <!-- Dynamic skill items will go here -->
                                 </div>
-                                <div class="form-group">
-                                    <label for="input-tools">Herramientas y Entornos (separados por comas)</label>
-                                    <input type="text" id="input-tools" placeholder="Ej. Git, GitHub, Docker, Firebase, Android Studio, VS Code">
-                                </div>
-                                <div class="form-group">
-                                    <label for="input-softskills">Habilidades Blandas / Otras (separados por comas)</label>
-                                    <input type="text" id="input-softskills" placeholder="Ej. Trabajo en equipo, Metodologías Ágiles, Resolución de problemas">
-                                </div>
+                                <button type="button" id="btn-add-skill" class="btn btn-outline btn-sm">
+                                    <i data-lucide="plus"></i> Añadir Competencia
+                                </button>
                             </div>
                         </details>
 
@@ -216,13 +280,26 @@
                                     <input type="checkbox" class="section-toggle" checked data-section="cv-section-languages" title="Activar/Desactivar sección">
                                     <i data-lucide="languages"></i> Idiomas
                                 </span>
-                                <i data-lucide="chevron-down" class="chevron"></i>
+                                <div style="display: flex; align-items: center; gap: 8px;">
+                                    <div class="section-controls" onclick="event.preventDefault();">
+                                        <div class="drag-handle" title="Arrastrar para mover"><i data-lucide="grip-vertical"></i></div>
+                                        <button class="btn-section-up" title="Subir sección"><i data-lucide="arrow-up"></i></button>
+                                        <button class="btn-section-down" title="Bajar sección"><i data-lucide="arrow-down"></i></button>
+                                    </div>
+                                    <i data-lucide="chevron-down" class="chevron"></i>
+                                </div>
                             </summary>
                             <div class="accordion-content">
                                 <div class="form-group">
-                                    <label for="input-lang-native">Idiomas y Niveles (separados por comas)</label>
-                                    <input type="text" id="input-lang-native" placeholder="Ej. Español (Nativo), Inglés (B2)">
+                                    <label for="input-title-languages">Título de la sección</label>
+                                    <input type="text" id="input-title-languages" value="Idiomas" placeholder="Ej. Idiomas, Lenguas...">
                                 </div>
+                                <div id="languages-list" class="dynamic-list">
+                                    <!-- Dynamic language items will go here -->
+                                </div>
+                                <button type="button" id="btn-add-language" class="btn btn-outline btn-sm">
+                                    <i data-lucide="plus"></i> Añadir Idioma
+                                </button>
                             </div>
                         </details>
 
@@ -230,8 +307,15 @@
                 </div>
 
                 <!-- Footer / Copyright -->
-                <footer class="app-footer">
-                    <p>&copy; 2026 Raniell Alvis. Todos los derechos reservados.</p>
+                <footer class="app-footer no-print">
+                    <div class="footer-content">
+                        <p>&copy; 2026 Raniell Alvis | ProCV</p>
+                        <div class="legal-links">
+                            <a href="#" onclick="openLegalModal('modal-aviso-legal')">Aviso Legal</a> | 
+                            <a href="#" onclick="openLegalModal('modal-privacidad')">Política de Privacidad</a> | 
+                            <a href="#" onclick="openLegalModal('modal-storage')">Almacenamiento Local</a>
+                        </div>
+                    </div>
                 </footer>
             </section>
 
@@ -243,10 +327,12 @@
                         
                         <!-- CV Top Accent Header Block -->
                         <header class="cv-header">
-                            <div class="cv-header-left">
-                                <h1 id="preview-fullname">Nombre Apellido</h1>
-                                <h2 id="preview-title">Título Profesional / Especialidad</h2>
-                            </div>
+                            <img id="preview-photo" src="" alt="Foto" style="display: none;" class="cv-profile-photo">
+                            <div class="cv-header-content">
+                                <div class="cv-header-left">
+                                    <h1 id="preview-fullname">Nombre Apellido</h1>
+                                    <h2 id="preview-title">Título Profesional / Especialidad</h2>
+                                </div>
                             <div class="cv-header-right">
                                 <!-- Quick Metadata Info -->
                                 <div class="cv-contact-item" id="cv-contact-email-container">
@@ -261,11 +347,12 @@
                                 <div class="cv-contact-item" id="cv-contact-website-container">
                                     <i data-lucide="globe"></i> <span id="preview-website">miweb.dev</span>
                                 </div>
-                                <div class="cv-contact-item" id="cv-contact-github-container">
-                                    <i data-lucide="github"></i> <span id="preview-github">github.com/usuario</span>
+                                <div class="cv-contact-item" id="cv-contact-link-container">
+                                    <i data-lucide="link"></i> <span id="preview-link">linkedin.com/in/usuario</span>
                                 </div>
                                 <div class="cv-contact-item" id="cv-contact-linkedin-container">
                                     <i data-lucide="linkedin"></i> <span id="preview-linkedin">linkedin.com/in/usuario</span>
+                                </div>
                                 </div>
                             </div>
                         </header>
@@ -278,40 +365,15 @@
                                 
                                 <!-- Technical Skills -->
                                 <section class="cv-section" id="cv-section-skills">
-                                    <h3 class="cv-section-title"><i data-lucide="cpu"></i> Competencias</h3>
-                                    
-                                    <div class="cv-skill-group" id="preview-languages-group">
-                                        <h4>Lenguajes</h4>
-                                        <div id="preview-languages" class="cv-tags">
-                                            <!-- Dynamically filled -->
-                                        </div>
-                                    </div>
-
-                                    <div class="cv-skill-group" id="preview-frameworks-group">
-                                        <h4>Frameworks / Libs</h4>
-                                        <div id="preview-frameworks" class="cv-tags">
-                                            <!-- Dynamically filled -->
-                                        </div>
-                                    </div>
-
-                                    <div class="cv-skill-group" id="preview-tools-group">
-                                        <h4>Herramientas</h4>
-                                        <div id="preview-tools" class="cv-tags">
-                                            <!-- Dynamically filled -->
-                                        </div>
-                                    </div>
-
-                                    <div class="cv-skill-group" id="preview-softskills-group">
-                                        <h4>Habilidades</h4>
-                                        <div id="preview-softskills" class="cv-tags">
-                                            <!-- Dynamically filled -->
-                                        </div>
+                                    <h3 class="cv-section-title" id="preview-title-skills-header"><i data-lucide="cpu"></i> <span>Competencias</span></h3>
+                                    <div id="preview-skills-dynamic" class="cv-skills-visual-list">
+                                        <!-- Dynamically filled with visual bars/stars -->
                                     </div>
                                 </section>
 
                                 <!-- Education -->
                                 <section class="cv-section" id="cv-section-education">
-                                    <h3 class="cv-section-title"><i data-lucide="graduation-cap"></i> Formación</h3>
+                                    <h3 class="cv-section-title" id="preview-title-education-header"><i data-lucide="graduation-cap"></i> <span>Formación</span></h3>
                                     <div id="preview-education" class="cv-list-block">
                                         <!-- Will be dynamically populated -->
                                     </div>
@@ -319,7 +381,7 @@
 
                                 <!-- Languages -->
                                 <section class="cv-section" id="cv-section-languages">
-                                    <h3 class="cv-section-title"><i data-lucide="languages"></i> Idiomas</h3>
+                                    <h3 class="cv-section-title" id="preview-title-languages-header"><i data-lucide="languages"></i> <span>Idiomas</span></h3>
                                     <div id="preview-languages-list" class="cv-languages-list">
                                         <!-- Dynamically filled -->
                                     </div>
@@ -332,28 +394,29 @@
                                 
                                 <!-- Profile Section -->
                                 <section class="cv-section" id="cv-section-summary">
-                                    <h3 class="cv-section-title"><i data-lucide="user-check"></i> Perfil Profesional</h3>
+                                    <h3 class="cv-section-title" id="preview-title-profile-header"><i data-lucide="user-check"></i> <span>Perfil Profesional</span></h3>
                                     <p id="preview-summary" class="cv-text-block">
                                         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut sed tristique lorem. Suspendisse non sapien sed lectus vestibulum hendrerit sed et est.
                                     </p>
                                 </section>
 
-                                <!-- Work Experience -->
-                                <section class="cv-section" id="cv-section-experience">
-                                    <h3 class="cv-section-title"><i data-lucide="briefcase"></i> Experiencia Laboral</h3>
-                                    <div id="preview-experience" class="cv-list-block">
-                                        <!-- Will be dynamically populated -->
-                                    </div>
-                                </section>
-
                                 <!-- Projects -->
                                 <section class="cv-section" id="cv-section-projects">
-                                    <h3 class="cv-section-title"><i data-lucide="folder-git-2"></i> Proyectos</h3>
+                                    <h3 class="cv-section-title" id="preview-title-projects-header"><i data-lucide="folder-git-2"></i> <span>Proyectos</span></h3>
                                     <div id="preview-projects" class="cv-list-block">
                                         <!-- Will be dynamically populated -->
                                     </div>
                                 </section>
 
+
+                                <!-- Work Experience -->
+                                <section class="cv-section" id="cv-section-experience">
+                                    <h3 class="cv-section-title" id="preview-title-experience-header"><i data-lucide="briefcase"></i> <span>Experiencia Laboral</span></h3>
+                                    <div id="preview-experience" class="cv-list-block">
+                                        <!-- Will be dynamically populated -->
+                                    </div>
+                                </section>
+                                
                             </div>
 
                         </div>
@@ -380,7 +443,67 @@
         </div>
     </div>
 
-    <!-- Script -->
-    <script src="script.js"></script>
+
+
+    <!-- Legal Modals -->
+    <div id="modal-aviso-legal" class="modal-overlay no-print legal-modal">
+        <div class="modal-box legal-box">
+            <div class="modal-header">
+                <h3 style="margin:0; font-size: 1.2rem;">Aviso Legal</h3>
+                <button class="btn-close-modal" onclick="closeLegalModal('modal-aviso-legal')"><i data-lucide="x"></i></button>
+            </div>
+            <div class="modal-body legal-body">
+                <p><strong>1. Datos Identificativos</strong><br>
+                En cumplimiento con el deber de información recogido en el artículo 10 de la Ley 34/2002, de 11 de julio, de Servicios de la Sociedad de la Información y del Comercio Electrónico (LSSICE), se informa que este sitio web es propiedad de [TU NOMBRE/EMPRESA], con domicilio en [TU DIRECCIÓN], y correo electrónico de contacto: [TU EMAIL].</p>
+                <p><strong>2. Uso del Portal</strong><br>
+                Esta aplicación proporciona acceso a herramientas de creación de currículums. El usuario asume la responsabilidad del uso del portal y se compromete a hacer un uso adecuado de sus funcionalidades.</p>
+                <p><strong>3. Propiedad Intelectual e Industrial</strong><br>
+                Todos los derechos reservados. Los diseños, estructura, código (excluyendo librerías de terceros open-source) y recursos son propiedad del responsable de la web.</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-privacidad" class="modal-overlay no-print legal-modal">
+        <div class="modal-box legal-box">
+            <div class="modal-header">
+                <h3 style="margin:0; font-size: 1.2rem;">Política de Privacidad</h3>
+                <button class="btn-close-modal" onclick="closeLegalModal('modal-privacidad')"><i data-lucide="x"></i></button>
+            </div>
+            <div class="modal-body legal-body">
+                <p><strong>Privacidad desde el Diseño (Client-Side Processing)</strong><br>
+                Esta herramienta ha sido desarrollada bajo el principio de máxima privacidad. <strong>No almacenamos, transmitimos, ni procesamos ningún dato personal de los usuarios en servidores externos.</strong></p>
+                <p><strong>1. Procesamiento de Datos Personales</strong><br>
+                Toda la información ingresada por el usuario (nombres, teléfonos, correos electrónicos, historial laboral y fotografías) es procesada <strong>exclusivamente en el navegador web local</strong> del dispositivo.</p>
+                <p><strong>2. Generación del Documento</strong><br>
+                La generación del archivo PDF se realiza localmente utilizando librerías de cliente (Javascript). Ningún documento final ni dato intermediario viaja por internet hacia los creadores de esta página ni hacia terceros.</p>
+                <p><strong>3. Responsabilidad del Usuario</strong><br>
+                Al ser una aplicación 100% del lado del cliente, es responsabilidad exclusiva del usuario proteger la información generada o descargada en su propio dispositivo.</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-storage" class="modal-overlay no-print legal-modal">
+        <div class="modal-box legal-box">
+            <div class="modal-header">
+                <h3 style="margin:0; font-size: 1.2rem;">Almacenamiento Local y Cookies</h3>
+                <button class="btn-close-modal" onclick="closeLegalModal('modal-storage')"><i data-lucide="x"></i></button>
+            </div>
+            <div class="modal-body legal-body">
+                <p><strong>Ausencia de Cookies de Rastreo</strong><br>
+                Este sitio web <strong>no utiliza cookies de seguimiento, analítica (como Google Analytics) o publicidad.</strong></p>
+                <p><strong>Uso de LocalStorage (Almacenamiento Local)</strong><br>
+                Para mejorar la experiencia del usuario y evitar la pérdida de información en caso de que la página se cierre o recargue accidentalmente, utilizamos la memoria de tu navegador (<code>localStorage</code>) con el único fin de:</p>
+                <ul>
+                    <li>Guardar temporalmente los textos, listas y el progreso de tu currículum.</li>
+                    <li>Recordar tus preferencias de diseño, colores y orden de las secciones.</li>
+                </ul>
+                <p>Estos datos <strong>nunca abandonan tu dispositivo</strong> y puedes eliminarlos en cualquier momento utilizando el botón "Limpiar Datos" dentro de la aplicación, o borrando los datos de navegación de tu navegador.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+    <script src="script.js?v=13"></script>
 </body>
 </html>
