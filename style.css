@@ -1347,3 +1347,13 @@ body.template-classic .cv-side-col {
 
 
 
+
+/* Fix for input editing issues in certain browsers */
+.form-group input,
+.form-group textarea,
+.form-group label {
+    pointer-events: auto !important;
+    user-select: auto !important;
+    z-index: 10;
+    position: relative;
+}
