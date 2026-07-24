@@ -28,6 +28,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const inputTitleProjects = document.getElementById('input-title-projects');
     const inputTitleEducation = document.getElementById('input-title-education');
     const inputTitleSkills = document.getElementById('input-title-skills');
+    const inputTitleSoftSkills = document.getElementById('input-title-softskills');
+    const inputSoftSkillsDesc = document.getElementById('input-softskills-desc');
     const inputTitleLanguages = document.getElementById('input-title-languages');
 
     const previewTitleProfile = document.querySelector('#preview-title-profile-header span');
@@ -35,6 +37,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const previewTitleProjects = document.querySelector('#preview-title-projects-header span');
     const previewTitleEducation = document.querySelector('#preview-title-education-header span');
     const previewTitleSkills = document.querySelector('#preview-title-skills-header span');
+    const previewTitleSoftSkills = document.querySelector('#preview-title-softskills-header span');
+    const previewSoftSkillsDesc = document.getElementById('preview-softskills-desc');
     const previewTitleLanguages = document.querySelector('#preview-title-languages-header span');
 
     // Photo Elements
@@ -115,7 +119,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
                 <div class="form-group">
                     <label>Descripción / Logros</label>
-                    <textarea class="exp-desc" rows="3" placeholder="Ej. Desarrollo de APIs en Java, diseño de vistas responsivas...">${data.desc || ''}</textarea>
+                    <textarea class="exp-desc bullet-textarea" rows="3" placeholder="Ej. Desarrollo de APIs en Java, diseño de vistas responsivas...">${data.desc || ''}</textarea>
                 </div>
         `;
         experienceList.insertAdjacentHTML('beforeend', createDynamicItemContainer(id, innerHtml));
@@ -304,7 +308,8 @@ document.addEventListener('DOMContentLoaded', () => {
         if(previewTitleExperience) previewTitleExperience.textContent = inputTitleExperience.value || 'Experiencia Laboral';
         if(previewTitleProjects) previewTitleProjects.textContent = inputTitleProjects.value || 'Proyectos';
         if(previewTitleEducation) previewTitleEducation.textContent = inputTitleEducation.value || 'Formación';
-        if(previewTitleSkills) previewTitleSkills.textContent = inputTitleSkills.value || 'Competencias';
+        if(previewTitleSkills) previewTitleSkills.textContent = inputTitleSkills.value || 'Tecnología';
+        if(previewTitleSoftSkills) previewTitleSoftSkills.textContent = inputTitleSoftSkills.value || 'Habilidades';
         if(previewTitleLanguages) previewTitleLanguages.textContent = inputTitleLanguages.value || 'Idiomas';
     }
 
@@ -448,6 +453,19 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    function updateSoftSkillsPreview() {
+        const text = inputSoftSkillsDesc.value;
+        const softSkillsSection = document.getElementById('cv-section-softskills');
+        if (text.trim() === '') {
+            softSkillsSection.style.display = 'none';
+        } else {
+            softSkillsSection.style.display = 'flex';
+            if(previewSoftSkillsDesc) {
+                previewSoftSkillsDesc.textContent = text;
+            }
+        }
+    }
+
     function updateLanguagesPreview() {
         if (previewLanguagesList) {
             previewLanguagesList.innerHTML = '';
@@ -486,6 +504,7 @@ document.addEventListener('DOMContentLoaded', () => {
         updateProjectsPreview();
         updateEducationPreview();
         updateSkillsPreview();
+        updateSoftSkillsPreview();
         updateLanguagesPreview();
         saveToLocalStorage();
     }
@@ -510,7 +529,7 @@ document.addEventListener('DOMContentLoaded', () => {
     [
         inputFullname, inputTitle, inputEmail, inputPhone, inputLink,
         inputLinkedin, inputWebsite, inputLocation, inputSummary,
-        inputTitleProfile, inputTitleExperience, inputTitleProjects, inputTitleEducation, inputTitleSkills, inputTitleLanguages
+        inputTitleProfile, inputTitleExperience, inputTitleProjects, inputTitleEducation, inputTitleSkills, inputTitleSoftSkills, inputSoftSkillsDesc, inputTitleLanguages
     ].forEach(element => {
         element.addEventListener('input', updatePreview);
     });
@@ -615,7 +634,8 @@ document.addEventListener('DOMContentLoaded', () => {
         new Sortable(accordionContainer, {
             animation: 150,
             handle: '.accordion-trigger', // Allows dragging from anywhere on the header
-            filter: '[data-fixed="true"]', // Prevent dragging fixed items
+            filter: '[data-fixed="true"] .accordion-trigger, input, textarea, select, button, .section-toggle', // Prevent dragging fixed items and inputs
+            preventOnFilter: false,
             onMove: function (evt) {
                 // Prevent dropping above or below fixed items
                 return !evt.related.hasAttribute('data-fixed');
@@ -668,6 +688,7 @@ document.addEventListener('DOMContentLoaded', () => {
             'cv-section-projects',
             'cv-section-experience',
             'cv-section-education',
+            'cv-section-softskills',
             'cv-section-skills',
             'cv-section-languages'
         ];
@@ -715,7 +736,9 @@ document.addEventListener('DOMContentLoaded', () => {
         inputTitleExperience.value = 'Experiencia Laboral';
         inputTitleProjects.value = 'Proyectos';
         inputTitleEducation.value = 'Formación';
-        inputTitleSkills.value = 'Competencias';
+        inputTitleSkills.value = 'Tecnología';
+        inputTitleSoftSkills.value = 'Habilidades';
+        inputSoftSkillsDesc.value = '• Gestión ágil de proyectos (Scrum, Kanban)\n• Liderazgo de equipos multidisciplinares\n• Comunicación efectiva y negociación\n• Resolución de problemas y pensamiento crítico';
         inputTitleLanguages.value = 'Idiomas';
 
         // Clear dynamic lists first
@@ -827,7 +850,9 @@ document.addEventListener('DOMContentLoaded', () => {
         inputTitleExperience.value = 'Experiencia Laboral';
         inputTitleProjects.value = 'Proyectos';
         inputTitleEducation.value = 'Formación';
-        inputTitleSkills.value = 'Competencias';
+        inputTitleSkills.value = 'Tecnología';
+        inputTitleSoftSkills.value = 'Habilidades';
+        inputSoftSkillsDesc.value = '';
         inputTitleLanguages.value = 'Idiomas';
 
         // Clear Dynamic Lists
@@ -939,8 +964,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 projects: inputTitleProjects.value,
                 education: inputTitleEducation.value,
                 skills: inputTitleSkills.value,
+                softskills: inputTitleSoftSkills.value,
                 languages: inputTitleLanguages.value
             },
+            softskillsDesc: inputSoftSkillsDesc.value,
             photo: currentPhoto,
             experience: [],
             projects: [],
@@ -1095,14 +1122,17 @@ document.addEventListener('DOMContentLoaded', () => {
                 inputTitleExperience.value = state.titles.experience || 'Experiencia Laboral';
                 inputTitleProjects.value = state.titles.projects || 'Proyectos';
                 inputTitleEducation.value = state.titles.education || 'Formación';
-                inputTitleSkills.value = state.titles.skills || 'Competencias';
+                inputTitleSkills.value = state.titles.skills || 'Tecnología';
+                inputTitleSoftSkills.value = state.titles.softskills || 'Habilidades';
                 inputTitleLanguages.value = state.titles.languages || 'Idiomas';
             } else {
                 inputTitleProfile.value = 'Perfil Profesional';
                 inputTitleExperience.value = 'Experiencia Laboral';
                 inputTitleProjects.value = 'Proyectos';
                 inputTitleEducation.value = 'Formación';
-                inputTitleSkills.value = 'Competencias';
+                inputTitleSkills.value = 'Tecnología';
+        inputTitleSoftSkills.value = 'Habilidades';
+        inputSoftSkillsDesc.value = '';
                 inputTitleLanguages.value = 'Idiomas';
             }
             currentPhoto = state.photo || null;
@@ -1193,6 +1223,55 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             saveToLocalStorage();
         });
+    });
+
+    // ----------------------------------------------------
+    // Auto-bullet functionality
+    // ----------------------------------------------------
+    document.addEventListener('keydown', function(e) {
+        if (e.target && e.target.classList.contains('bullet-textarea')) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                const start = e.target.selectionStart;
+                const end = e.target.selectionEnd;
+                const val = e.target.value;
+                const bullet = '\n• ';
+                e.target.value = val.substring(0, start) + bullet + val.substring(end);
+                e.target.selectionStart = e.target.selectionEnd = start + bullet.length;
+                e.target.dispatchEvent(new Event('input', { bubbles: true }));
+            }
+        }
+    });
+
+    document.addEventListener('input', function(e) {
+        if (e.target && e.target.classList.contains('bullet-textarea')) {
+            let val = e.target.value;
+            if (val.length > 0 && !val.startsWith('• ')) {
+                if (val.startsWith('•')) {
+                    e.target.value = '• ' + val.substring(1).trimStart();
+                } else {
+                    e.target.value = '• ' + val;
+                }
+            }
+            // Also ensure that if the user deletes everything except the bullet, and then deletes the bullet, it allows it to be empty.
+            if (val === '•' || val === '• ') {
+                // If they are trying to delete the bullet, let it become empty
+                // Wait, if it's strictly '• ' and they backspace, it becomes '•' which then triggers nothing or we can clear it.
+                if (e.inputType === 'deleteContentBackward') {
+                    e.target.value = '';
+                }
+            }
+        }
+    });
+
+    document.addEventListener('focusin', function(e) {
+        if (e.target && e.target.classList.contains('bullet-textarea')) {
+            if (e.target.value.trim() === '') {
+                e.target.value = '• ';
+                e.target.selectionStart = e.target.selectionEnd = e.target.value.length;
+                e.target.dispatchEvent(new Event('input', { bubbles: true }));
+            }
+        }
     });
 
     // ----------------------------------------------------

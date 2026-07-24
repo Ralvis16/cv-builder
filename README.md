@@ -1,4 +1,4 @@
-# ProCV 🚀 // Creador de Currículum Profesional
+# ProCV - Creador de Currículum Profesional
 
 Una aplicación web moderna, premium e interactiva diseñada para crear currículums profesionales adaptados al formato estándar de impresión **A4**. Pensada para cualquier tipo de público que busque una presentación de su perfil limpia, minimalista y de alto impacto visual.
 
@@ -16,7 +16,7 @@ Una aplicación web moderna, premium e interactiva diseñada para crear currícu
 *   **Optimización de Impresión A4:** Diseñado con márgenes nativos CSS (`@page { margin: 12mm 14mm; }`) y división de bloques inteligente (`break-inside: avoid`), asegurando que la exportación a PDF sea perfecta y aproveche al máximo el espacio de la hoja sin dejar huecos en blanco.
 *   **Confirmaciones Seguras y UX Fluida:** El botón de limpiar datos utiliza un modal de confirmación HTML/CSS personalizado, previniendo congelamientos por bloqueadores de pop-ups en previsualizadores integrados.
 *   **Persistencia Local Automática:** Guarda el progreso automáticamente en el `localStorage` del navegador para que no pierdas nada al recargar o cerrar la pestaña.
-*   **Carga de Ejemplo DAM:** Incluye un botón para cargar datos de prueba reales para un perfil de estudiante de Desarrollo de Aplicaciones Multiplataforma (DAM) junior.
+*   **Carga de Ejemplo:** Incluye un botón para cargar datos de prueba reales para un perfil profesional general, facilitando la visualización inmediata de cómo quedará el currículum.
 
 ---
 

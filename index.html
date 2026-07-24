@@ -243,12 +243,40 @@
                             </div>
                         </details>
 
-                        <!-- 6. Tecnologías y Habilidades -->
+                        <!-- 6.5. Habilidades (Nueva) -->
+                        <details class="accordion-item">
+                            <summary class="accordion-trigger">
+                                <span>
+                                    <input type="checkbox" class="section-toggle" checked data-section="cv-section-softskills" title="Activar/Desactivar sección">
+                                    <i data-lucide="star"></i> Habilidades
+                                </span>
+                                <div style="display: flex; align-items: center; gap: 8px;">
+                                    <div class="section-controls" onclick="event.preventDefault();">
+                                        <div class="drag-handle" title="Arrastrar para mover"><i data-lucide="grip-vertical"></i></div>
+                                        <button class="btn-section-up" title="Subir sección"><i data-lucide="arrow-up"></i></button>
+                                        <button class="btn-section-down" title="Bajar sección"><i data-lucide="arrow-down"></i></button>
+                                    </div>
+                                    <i data-lucide="chevron-down" class="chevron"></i>
+                                </div>
+                            </summary>
+                            <div class="accordion-content">
+                                <div class="form-group">
+                                    <label for="input-title-softskills">Título de la sección</label>
+                                    <input type="text" id="input-title-softskills" value="Habilidades" placeholder="Ej. Habilidades Blandas, Competencias...">
+                                </div>
+                                <div class="form-group">
+                                    <label for="input-softskills-desc">Lista de Habilidades</label>
+                                    <textarea id="input-softskills-desc" class="bullet-textarea" rows="5" placeholder="Escribe tus habilidades aquí..."></textarea>
+                                </div>
+                            </div>
+                        </details>
+
+                        <!-- 6. Tecnologías -->
                         <details class="accordion-item">
                             <summary class="accordion-trigger">
                                 <span>
                                     <input type="checkbox" class="section-toggle" checked data-section="cv-section-skills" title="Activar/Desactivar sección">
-                                    <i data-lucide="terminal"></i> Tecnologías y Habilidades
+                                    <i data-lucide="terminal"></i> Tecnología
                                 </span>
                                 <div style="display: flex; align-items: center; gap: 8px;">
                                     <div class="section-controls" onclick="event.preventDefault();">
@@ -262,13 +290,13 @@
                             <div class="accordion-content">
                                 <div class="form-group">
                                     <label for="input-title-skills">Título de la sección</label>
-                                    <input type="text" id="input-title-skills" value="Competencias" placeholder="Ej. Habilidades, Tecnologías...">
+                                    <input type="text" id="input-title-skills" value="Tecnología" placeholder="Ej. Tecnologías, Herramientas...">
                                 </div>
                                 <div id="skills-list" class="dynamic-list">
                                     <!-- Dynamic skill items will go here -->
                                 </div>
                                 <button type="button" id="btn-add-skill" class="btn btn-outline btn-sm">
-                                    <i data-lucide="plus"></i> Añadir Competencia
+                                    <i data-lucide="plus"></i> Añadir Tecnología
                                 </button>
                             </div>
                         </details>
@@ -363,9 +391,17 @@
                             <!-- Left Column: Skills, Education, Languages (Sidebar Track) -->
                             <div class="cv-side-col">
                                 
+                                <!-- Soft Skills -->
+                                <section class="cv-section" id="cv-section-softskills">
+                                    <h3 class="cv-section-title" id="preview-title-softskills-header"><i data-lucide="star"></i> <span>Habilidades</span></h3>
+                                    <p id="preview-softskills-desc" class="cv-text-block" style="white-space: pre-line; padding-left: 5px;">
+                                        <!-- Soft skills description -->
+                                    </p>
+                                </section>
+
                                 <!-- Technical Skills -->
                                 <section class="cv-section" id="cv-section-skills">
-                                    <h3 class="cv-section-title" id="preview-title-skills-header"><i data-lucide="cpu"></i> <span>Competencias</span></h3>
+                                    <h3 class="cv-section-title" id="preview-title-skills-header"><i data-lucide="cpu"></i> <span>Tecnología</span></h3>
                                     <div id="preview-skills-dynamic" class="cv-skills-visual-list">
                                         <!-- Dynamically filled with visual bars/stars -->
                                     </div>
