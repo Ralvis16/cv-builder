@@ -1046,7 +1046,20 @@ body {
     }
 
     .action-buttons {
-        justify-content: space-between;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 0.5rem;
+    }
+
+    .action-buttons .btn {
+        flex: 1 1 calc(50% - 0.5rem);
+        text-align: center;
+        font-size: 0.85rem;
+        padding: 0.5rem 0.5rem;
+    }
+
+    .grid-2 {
+        grid-template-columns: 1fr;
     }
 
     .cv-sheet {
