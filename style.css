@@ -980,6 +980,24 @@ body {
         overflow-y: auto !important;
     }
 
+    .app-header {
+        flex-wrap: wrap;
+        height: auto;
+        padding: 1rem;
+        gap: 1rem;
+    }
+
+    .header-actions {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 1rem;
+    }
+
+    .action-buttons {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
     .app-container {
         height: auto !important;
         width: 100% !important;
@@ -1041,25 +1059,33 @@ body {
         gap: 1rem;
     }
 
-    .theme-selector {
+    .theme-selector, .template-selector {
         justify-content: space-between;
+        width: 100%;
+        margin: 0;
+        padding: 0;
     }
 
     .action-buttons {
-        flex-wrap: wrap;
-        justify-content: center;
+        display: grid !important;
+        grid-template-columns: repeat(2, 1fr) !important;
         gap: 0.5rem;
     }
 
     .action-buttons .btn {
-        flex: 1 1 calc(50% - 0.5rem);
+        flex: none;
+        width: 100%;
         text-align: center;
-        font-size: 0.85rem;
-        padding: 0.5rem 0.5rem;
+        font-size: 0.8rem;
+        padding: 0.6rem 0.5rem;
+    }
+
+    .action-buttons .btn:last-child {
+        grid-column: 1 / -1;
     }
 
     .grid-2 {
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr !important;
     }
 
     .cv-sheet {
